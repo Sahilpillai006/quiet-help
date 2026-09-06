@@ -136,7 +136,7 @@ It provides a browser-based interface for viewing information received from the 
     quiet-help/
     │
     ├── firmware/
-    │   ├──quiet_help
+    │   └── quiet_help/
     │       └── quiet_help.ino
     │
     ├── web/
@@ -147,7 +147,6 @@ It provides a browser-based interface for viewing information received from the 
     ├── README.md
     ├── .gitignore
     └── LICENSE
-
 ---
 
 ## Setup
