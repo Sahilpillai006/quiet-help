@@ -145,7 +145,6 @@ It provides a browser-based interface for viewing information received from the 
     │   └── script.js
     │
     ├── README.md
-    ├── .gitignore
     └── LICENSE
 ---
 
