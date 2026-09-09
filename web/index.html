@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiet Help</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+        <div>
+            <h1>Quiet Help</h1>
+            <p>Classroom Assistance System</p>
+        </div>
+
+        <div class="connection-status">
+            <span class="status-dot"></span>
+            <span id="systemStatus">Connecting...</span>
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <p id="pendingCount">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Acknowledged</h3>
+                <p id="acknowledgedCount">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Resolved</h3>
+                <p id="resolvedCount">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total</h3>
+                <p id="totalCount">0</p>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             STUDENT MANAGEMENT
+        ========================== -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Student Management</h2>
+
+                    <p>
+                        Register students and assign their Quiet Help device.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form id="studentForm" class="student-form">
+
+                <!-- STUDENT NAME -->
+
+                <div class="form-group">
+
+                    <label for="studentName">
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentName"
+                        placeholder="Enter student name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ROLL NUMBER -->
+
+                <div class="form-group">
+
+                    <label for="rollNumber">
+                        Roll Number
+                    </label>
+
+                    <input
+                        type="number"
+                        id="rollNumber"
+                        placeholder="Enter roll number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CLASS -->
+
+                <div class="form-group">
+
+                    <label for="className">
+                        Class
+                    </label>
+
+                    <input
+                        type="text"
+                        id="className"
+                        placeholder="Example: 8A"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DEVICE -->
+
+                <div class="form-group">
+
+                    <label for="deviceId">
+                        Device ID
+                    </label>
+
+                    <select id="deviceId" required>
+
+                        <option value="">
+                            Select Device
+                        </option>
+
+                        <option value="BTN_01">
+                            BTN_01
+                        </option>
+
+                        <option value="BTN_02">
+                            BTN_02
+                        </option>
+
+                        <option value="BTN_03">
+                            BTN_03
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- FORM BUTTONS -->
+
+                <div class="student-form-buttons">
+
+                    <button
+                        type="submit"
+                        id="studentSubmitBtn"
+                        class="primary-btn"
+                    >
+                        Add Student
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="cancelEditBtn"
+                        class="secondary-btn"
+                        style="display: none;"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- REGISTERED STUDENTS -->
+
+            <div class="student-list-section">
+
+                <h3>Registered Students</h3>
+
+                <div
+                    id="studentList"
+                    class="student-list"
+                >
+
+                    <p class="empty-message">
+                        No students registered yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             HELP REQUESTS
+        ========================== -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Help Requests</h2>
+
+                    <p>
+                        Live requests from students.
+                    </p>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search student..."
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="requestList"
+                class="request-list"
+            >
+
+                <p class="empty-message">
+                    No help requests.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             REQUEST HISTORY
+        ========================== -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Request History</h2>
+
+                    <p>
+                        Previous help requests.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="clearHistoryBtn"
+                    class="danger-btn"
+                    type="button"
+                >
+                    Clear History
+                </button>
+
+            </div>
+
+
+            <div
+                id="historyList"
+                class="history-list"
+            >
+
+                <p class="empty-message">
+                    No request history.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         NOTIFICATION
+    ========================== -->
+
+    <div
+        id="notification"
+        class="notification"
+    >
+
+        <span id="notificationText"></span>
+
+    </div>
+
+
+    <!-- =========================
+         FIREBASE JAVASCRIPT
+    ========================== -->
+
+    <script
+        type="module"
+        src="script.js"
+    ></script>
+
+</body>
+
+</html>
