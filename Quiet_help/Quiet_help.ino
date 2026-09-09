@@ -5,8 +5,8 @@
 // Wi-Fi
 // ==================================================
 
-const char* WIFI_SSID = "AI LAB";
-const char* WIFI_PASSWORD = "11223344";
+const char* WIFI_SSID = "Your WiFi SSID";
+const char* WIFI_PASSWORD = "Your Wifi password";
 
 
 // ==================================================
@@ -14,7 +14,7 @@ const char* WIFI_PASSWORD = "11223344";
 // ==================================================
 
 const char* FIREBASE_URL =
-    "https://inspiremanak-5e002-default-rtdb.asia-southeast1.firebasedatabase.app";
+    "ypur firebase url.firebasedatabase.app";
 
 
 // ==================================================
