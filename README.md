@@ -1,18 +1,20 @@
 # Quiet Help
 
-An IoT-based emergency assistance system developed as a student innovation project for the INSPIRE-MANAK program.
+An IoT-based classroom assistance and help-request management system developed as a student innovation project for the INSPIRE-MANAK program.
 
-The system provides a simple physical interface through which a user can trigger a discreet help request. The request is sent wirelessly to a connected backend and can be monitored through a web-based interface.
+The system combines physical help-request buttons, an ESP32 controller, Wi-Fi, Firebase Realtime Database, and a web dashboard to allow help requests to be generated, monitored, acknowledged, and resolved.
 
 ---
 
 ## Project Overview
 
-Quiet Help was developed as a technology prototype to explore how IoT systems can be used to provide a simple and accessible method of requesting assistance.
+Quiet Help was developed as a student innovation project to explore how an IoT-based system could provide a simple way for students to request assistance.
 
-The project combines a physical help button, an ESP32-based controller, wireless communication, Firebase, and a web interface into a single system.
+The system consists of physical buttons connected to an ESP32. When a button is pressed, the ESP32 sends a help request to Firebase through Wi-Fi.
 
-A physical prototype of a room environment was also built to demonstrate how the system could be integrated into a real-world setting.
+A web dashboard monitors these requests and provides tools for managing students, tracking request status, and viewing request history.
+
+The project also includes a physical classroom/room prototype to demonstrate the concept.
 
 ---
 
@@ -24,97 +26,209 @@ A physical prototype of a room environment was also built to demonstrate how the
             ↓
        Wi-Fi Network
             ↓
-         Firebase
+    Firebase Realtime Database
             ↓
-      Web Dashboard
+       Web Dashboard
             ↓
-      Help Request Display
+    Request Management
 
-The ESP32 detects the physical button press and sends an event to the backend.
-
-The web interface can then retrieve and display the corresponding help request.
+The ESP32 acts as the hardware interface, while Firebase provides the backend data layer and the web application provides the monitoring and management interface.
 
 ---
 
 ## Key Features
 
-- Physical help button
-- ESP32-based control system
+### Hardware
+
+- ESP32-based controller
+- Three physical help buttons
+- Individual device identification
+- Button debouncing
+- Button-release detection
 - Wi-Fi connectivity
-- Firebase backend integration
-- Web-based monitoring interface
-- Real-time help event transmission
-- Device identification
-- Event timestamping
-- Physical demonstration prototype
-- HTML, CSS, and JavaScript web interface
+- Serial Monitor status and debugging
+
+### Backend
+
+- Firebase Realtime Database
+- Help request storage
+- Firebase server-side timestamps
+- Request status management
+- Real-time database updates
+
+### Web Dashboard
+
+- System connection status
+- Pending request count
+- Acknowledged request count
+- Resolved request count
+- Total request count
+- Student management
+- Device assignment
+- Active help requests
+- Request history
+- Request search
+- Request acknowledgement
+- Request resolution
+- Real-time Firebase listeners
 
 ---
 
 ## How It Works
 
-When the user presses the physical help button, the ESP32 detects the input.
+### 1. Help Request
 
-The controller creates a help event containing information such as the device identifier, event type, timestamp, and status.
+A user presses one of the physical help buttons connected to the ESP32.
 
-The event is then transmitted through Wi-Fi to Firebase.
+Each button has its own device identifier:
 
-The web interface communicates with the backend and displays the received help information.
+    BTN_01
+    BTN_02
+    BTN_03
 
-A simplified example of the event structure is:
+### 2. ESP32 Processing
+
+The ESP32 detects the button press and prepares a help-request event.
+
+The event contains information such as:
 
     {
       "deviceId": "BTN_01",
       "event": "HELP",
-      "timestamp": 1788324322,
-      "status": "..."
+      "timestamp": "Firebase Server Timestamp",
+      "status": "Pending"
     }
 
-The exact values depend on the device state and the event being generated.
+### 3. Firebase
+
+The ESP32 sends the request to the Firebase Realtime Database.
+
+The requests are stored under the project's request collection.
+
+Firebase provides the server-side timestamp used for the request.
+
+### 4. Web Dashboard
+
+The web application listens for changes in Firebase and updates the dashboard in real time.
+
+The system can display active requests and maintain request history.
+
+### 5. Request Management
+
+Requests can progress through different states, including:
+
+    Pending
+       ↓
+    Acknowledged
+       ↓
+    Resolved
+
+This allows the dashboard to distinguish between new, acknowledged, and completed help requests.
+
+---
+
+## Student Management
+
+The web dashboard includes a student management system.
+
+Student records can contain information such as:
+
+- Student name
+- Roll number
+- Class
+- Assigned device
+
+The dashboard provides functionality to:
+
+- Add students
+- Edit student information
+- Delete student records
+- Associate students with help-request devices
+
+This allows a physical button to be associated with a particular student or location.
+
+---
+
+## Help Request Dashboard
+
+The dashboard provides an overview of the current system state.
+
+It tracks:
+
+- Pending requests
+- Acknowledged requests
+- Resolved requests
+- Total requests
+
+Active requests can be reviewed and managed directly from the dashboard.
+
+The system also maintains request history, allowing previous requests to be reviewed.
+
+---
+
+## Request Lifecycle
+
+A typical help request follows this process:
+
+    Button Pressed
+          ↓
+    ESP32 Detects Event
+          ↓
+    Wi-Fi Communication
+          ↓
+    Firebase Request Created
+          ↓
+    Dashboard Updates
+          ↓
+    Request Acknowledged
+          ↓
+    Request Resolved
+          ↓
+    Request Added to History
 
 ---
 
 ## Hardware
 
-The completed prototype uses an ESP32-based controller together with a physical help button.
+The completed prototype uses an ESP32 controller connected to physical help buttons.
 
-The hardware is integrated into a miniature room environment to demonstrate the intended use case.
-
-### Main Hardware Components
+### Main Components
 
 - ESP32 development board
-- Physical push button
+- Three push buttons
 - Connecting wires
 - Power supply
-- Prototype room model
+- Physical classroom/room prototype
 
-Additional components may be present in the physical prototype depending on the final build.
+The hardware is arranged as part of a miniature physical model to demonstrate the intended use of the system.
 
 ---
 
 ## Software
 
-The project consists of two major software components.
-
 ### ESP32 Firmware
 
-The ESP32 firmware is responsible for:
+The firmware is written for the ESP32 using the Arduino environment.
 
-- Connecting to Wi-Fi
-- Monitoring the help button
-- Detecting button presses
-- Creating help events
-- Communicating with Firebase
+The firmware handles:
 
-### Web Interface
+- Wi-Fi connection
+- Button input
+- Button debouncing
+- Device identification
+- Help-event creation
+- Firebase communication
+- Serial debugging
 
-The web interface is built using:
+### Web Application
+
+The dashboard is built using:
 
 - HTML
 - CSS
 - JavaScript
 
-It provides a browser-based interface for viewing information received from the IoT system.
+Firebase is used as the backend for storing and synchronizing system data.
 
 ---
 
@@ -124,7 +238,7 @@ It provides a browser-based interface for viewing information received from the 
 - Arduino
 - C/C++
 - Wi-Fi
-- Firebase
+- Firebase Realtime Database
 - HTML
 - CSS
 - JavaScript
@@ -135,9 +249,8 @@ It provides a browser-based interface for viewing information received from the 
 
     quiet-help/
     │
-    ├── firmware/
-    │   └── quiet_help/
-    │       └── quiet_help.ino
+    ├── Quiet_help/
+    │   └── Quiet_help.ino
     │
     ├── web/
     │   ├── index.html
@@ -146,56 +259,64 @@ It provides a browser-based interface for viewing information received from the 
     │
     ├── README.md
     └── LICENSE
+
+The Arduino sketch is kept inside a folder with the same name as the sketch, following the standard Arduino project structure.
+
 ---
 
 ## Setup
 
-### Firmware
+### ESP32 Firmware
 
-1. Open the Arduino sketch located in the `firmware` directory.
-2. Install the required ESP32 board support in the Arduino IDE.
-3. Configure the required Wi-Fi and Firebase settings.
-4. Connect the ESP32 to the computer.
-5. Select the appropriate ESP32 board and port.
-6. Upload the firmware.
+1. Open the Arduino sketch:
 
-Do not commit private Wi-Fi passwords, Firebase credentials, or other secrets to the repository.
+       Quiet_help/Quiet_help.ino
 
-### Web Interface
+2. Install ESP32 board support in the Arduino IDE.
+3. Configure the required Wi-Fi settings.
+4. Configure the required Firebase settings.
+5. Connect the ESP32 to the computer.
+6. Select the appropriate ESP32 board and port.
+7. Upload the firmware.
+
+### Web Application
 
 Open the files inside the `web` directory using a suitable local web server or hosting environment.
 
-Configure the Firebase connection according to the project's deployment requirements.
+Configure the Firebase connection according to the deployment requirements of the project.
 
 ---
 
 ## Usage
 
+### Hardware
+
 1. Power on the ESP32.
-2. Allow the controller to connect to Wi-Fi.
-3. Press the physical help button.
+2. Wait for the device to connect to Wi-Fi.
+3. Press one of the physical help buttons.
 4. The ESP32 detects the button press.
-5. A help event is sent to Firebase.
-6. The web interface receives or retrieves the event.
-7. The help request is displayed for monitoring.
+5. A help request is created.
+6. The request is sent to Firebase.
+
+### Dashboard
+
+1. Open the web dashboard.
+2. Connect to the Firebase backend.
+3. Monitor incoming help requests.
+4. Identify the associated device or student.
+5. Acknowledge the request.
+6. Resolve the request when assistance has been provided.
+7. Review previous requests through the request history.
 
 ---
 
 ## Physical Prototype
 
-A miniature room model was constructed to demonstrate the concept in a physical environment.
+A miniature classroom/room environment was constructed to demonstrate the system physically.
 
-The prototype represents how a help-request system could be integrated into a room or similar space.
+The prototype combines the physical help-request interface with the ESP32 controller and demonstrates how the system can connect a physical event to a digital monitoring dashboard.
 
-The physical model is intended as a demonstration platform for the underlying IoT system rather than a production-ready installation.
-
----
-
-## Project Demonstration
-
-The project includes both a physical hardware prototype and a software monitoring interface.
-
-The physical prototype demonstrates the user interaction, while the web interface demonstrates how the resulting help event can be monitored digitally.
+The physical model is intended as a demonstration and educational prototype.
 
 ---
 
@@ -203,7 +324,7 @@ The physical prototype demonstrates the user interaction, while the web interfac
 
 This project was developed as part of my work supporting student innovation projects for the INSPIRE-MANAK program.
 
-My involvement included technical development and project support, including areas such as:
+My technical involvement included areas such as:
 
 - Hardware integration
 - ESP32 firmware development
@@ -211,17 +332,18 @@ My involvement included technical development and project support, including are
 - Firebase integration
 - Web interface development
 - System integration
-- Prototype development and testing
+- Prototype development
+- Testing and debugging
 
-The project was developed to support a student innovation initiative, and this repository documents the technical implementation and development work involved in the prototype.
+The project was developed in the context of a student innovation initiative, and this repository documents the technical implementation and prototype development work.
 
 ---
 
 ## Project Context
 
-Quiet Help was created in the context of the INSPIRE-MANAK program, which encourages student innovation and the development of practical solutions to real-world problems.
+Quiet Help was developed in the context of the INSPIRE-MANAK program, which supports student innovation and the development of solutions to practical problems.
 
-The prototype demonstrates how a relatively simple IoT architecture can connect a physical interaction with a remote digital monitoring system.
+The project demonstrates how an ESP32-based IoT device can be connected to a cloud backend and a web-based management interface.
 
 ---
 
@@ -229,36 +351,40 @@ The prototype demonstrates how a relatively simple IoT architecture can connect 
 
 This project is a prototype and should not be considered a production-grade emergency or safety system.
 
-Potential limitations include:
+Current limitations include:
 
 - Dependence on Wi-Fi connectivity
-- Dependence on the backend service
+- Dependence on Firebase availability
 - Internet connectivity requirements
 - Hardware and power reliability
 - Prototype-level physical construction
-- No guaranteed emergency-service integration
+- No direct emergency-service integration
 - Potential delays caused by network or backend availability
+- Limited number of physical input devices in the current prototype
 
-The system should therefore be treated as a demonstration and educational prototype rather than a certified emergency communication system.
+The system should therefore be treated as an educational and demonstration prototype.
 
 ---
 
 ## Future Improvements
 
-Possible future improvements include:
+Possible improvements include:
 
-- Add multiple help buttons or devices
-- Add unique locations for each device
-- Add acknowledgement of help requests
-- Add request history
-- Add notification mechanisms
-- Add device health monitoring
-- Improve authentication and access control
-- Improve reliability during network outages
-- Add offline event buffering
-- Improve the physical enclosure
-- Develop a more scalable backend architecture
-- Add role-based access for monitoring users
+- Support for more help-request devices
+- Improved device and location management
+- Request notifications
+- Request acknowledgement tracking
+- Request history and analytics
+- Improved authentication
+- Role-based dashboard access
+- Offline event buffering
+- Better network failure handling
+- Device health monitoring
+- Improved physical enclosure
+- Scalable backend architecture
+- Improved dashboard interface
+- Mobile-friendly dashboard
+- Additional monitoring and reporting features
 
 ---
 
@@ -266,7 +392,7 @@ Possible future improvements include:
 
 **Status: Completed Prototype**
 
-The physical prototype and supporting software system were completed as part of the student innovation project.
+The physical prototype and supporting firmware and web application were completed as part of the student innovation project.
 
 This repository documents the completed prototype and its technical implementation.
 
@@ -282,4 +408,4 @@ Engineer | Robotics & AI Enthusiast
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is available under the MIT License.
